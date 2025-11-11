@@ -3,7 +3,7 @@ use tower_lsp::lsp_types::*;
 use tower_lsp::{LanguageServer, LspService, Server, Client};
 use std::sync::Arc;
 use tokio::sync::RwLock;
-use cel_parser::parse;
+use cel::Program;
 
 #[derive(Debug)]
 pub struct Backend {
@@ -25,13 +25,13 @@ impl Backend {
     async fn validate_document(&self, uri: Url, content: &str) -> Vec<Diagnostic> {
         let mut diagnostics = Vec::new();
 
-        // Try to parse the CEL expression
-        match parse(content) {
-            Ok(_ast) => {
-                // Successfully parsed, no errors
+        // Try to compile the CEL expression
+        match Program::compile(content) {
+            Ok(_program) => {
+                // Successfully compiled, no errors
             }
             Err(e) => {
-                // Parse error - create a diagnostic
+                // Compilation error - create a diagnostic
                 let diagnostic = Diagnostic {
                     range: Range {
                         start: Position {
@@ -47,7 +47,7 @@ impl Backend {
                     code: None,
                     code_description: None,
                     source: Some("cel-lsp".to_string()),
-                    message: format!("CEL parse error: {}", e),
+                    message: format!("CEL compilation error: {}", e),
                     related_information: None,
                     tags: None,
                     data: None,

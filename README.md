@@ -20,7 +20,7 @@ This project combines:
 - **workers-rs**: Cloudflare Workers SDK for Rust
 - **cel-rust**: Rust implementation of the Common Expression Language ([cel-rust/cel-rust](https://github.com/cel-rust/cel-rust))
 
-The LSP server is exposed via HTTP endpoints on Cloudflare Workers, allowing clients to communicate with it over JSON-RPC. It uses `cel-parser` for parsing CEL expressions and `cel-interpreter` for evaluation and semantic analysis.
+The LSP server is exposed via HTTP endpoints on Cloudflare Workers, allowing clients to communicate with it over JSON-RPC. It uses the `cel` crate for parsing and compiling CEL expressions.
 
 ## Prerequisites
 
@@ -136,8 +136,7 @@ Contributions are welcome! Please feel free to submit issues and pull requests.
 
 - [CEL Specification](https://github.com/google/cel-spec)
 - [cel-rust Implementation](https://github.com/cel-rust/cel-rust)
-- [cel-parser Documentation](https://docs.rs/cel-parser/)
-- [cel-interpreter Documentation](https://docs.rs/cel-interpreter/)
+- [cel crate Documentation](https://docs.rs/cel/)
 - [tower-lsp Documentation](https://docs.rs/tower-lsp/)
 - [workers-rs Documentation](https://docs.rs/worker/)
 - [LSP Specification](https://microsoft.github.io/language-server-protocol/)
