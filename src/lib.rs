@@ -1,7 +1,6 @@
 use worker::*;
 
-mod lsp;
-use lsp::Backend;
+pub mod lsp;
 
 #[event(fetch)]
 async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
