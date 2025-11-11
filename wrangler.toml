@@ -1,0 +1,11 @@
+name = "cel-lsp"
+type = "rust"
+compatibility_date = "2023-01-01"
+workers_dev = true
+
+[build]
+command = "cargo install -q worker-build && worker-build --release"
+
+[env.production]
+route = ""
+zone_id = ""
