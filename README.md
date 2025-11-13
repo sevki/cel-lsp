@@ -85,11 +85,19 @@ wrangler publish
 
 ```
 cel-lsp/
+├── .github/
+│   └── workflows/
+│       └── ci.yml                    # GitHub Actions CI/CD
 ├── src/
-│   ├── lib.rs          # Cloudflare Workers entry point
-│   └── lsp.rs          # LSP backend implementation
-├── Cargo.toml          # Rust dependencies
-├── wrangler.toml       # Cloudflare Workers configuration
+│   ├── lib.rs                        # Cloudflare Workers entry point
+│   └── lsp.rs                        # LSP backend implementation
+├── tests/
+│   ├── jsonrpc_protocol_tests.rs     # JSON-RPC protocol tests
+│   ├── lsp_integration_tests.rs      # LSP integration tests
+│   └── workers_endpoint_tests.rs     # Workers endpoint tests
+├── Cargo.toml                        # Rust dependencies
+├── wrangler.toml                     # Cloudflare Workers configuration
+├── .gitignore
 └── README.md
 ```
 
@@ -110,6 +118,60 @@ Currently implemented:
 
 - `POST /lsp`: Main LSP JSON-RPC endpoint
 - `GET /health`: Health check endpoint
+
+## Testing
+
+The project includes comprehensive test coverage with 43 tests across multiple test suites:
+
+### Unit Tests (8 tests)
+Located in `src/lsp.rs`:
+- CEL expression validation (valid/invalid expressions)
+- Function call validation
+- String operations
+- List operations with map
+- Conditional expressions
+- Empty expression handling
+- Complex expression validation
+
+### LSP Integration Tests (5 tests)
+Located in `tests/lsp_integration_tests.rs`:
+- Server initialization and capabilities verification
+- Server shutdown
+- Completion provider functionality
+- Hover provider functionality
+- Document lifecycle (open, change, close)
+
+### JSON-RPC Protocol Tests (16 tests)
+Located in `tests/jsonrpc_protocol_tests.rs`:
+- JSON-RPC request/response format validation
+- LSP method signatures (initialize, didOpen, didChange, etc.)
+- Completion and hover response structures
+- Diagnostic message formatting
+- Error response handling
+- CEL builtin function validation
+
+### Workers Endpoint Tests (14 tests)
+Located in `tests/workers_endpoint_tests.rs`:
+- HTTP endpoint request handling
+- LSP capabilities exposure
+- Request ID preservation
+- Concurrent request handling
+- Malformed JSON handling
+- CEL expression validation through endpoints
+- Complex CEL expression compilation
+
+Run all tests:
+```bash
+cargo test
+```
+
+Run specific test suite:
+```bash
+cargo test --test jsonrpc_protocol_tests
+cargo test --test workers_endpoint_tests
+cargo test --test lsp_integration_tests
+cargo test --lib  # Run unit tests only
+```
 
 ## TODOs
 
