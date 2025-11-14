@@ -68,7 +68,8 @@ impl LanguageServer for Backend {
                 name: "cel-lsp".to_string(),
                 version: Some("0.1.0".to_string()),
             }),
-            offset_encoding: None,
+            #[cfg(not(target_arch = "wasm32"))]
+            offset_encoding: Some("utf-16".to_string()),
             capabilities: ServerCapabilities {
                 text_document_sync: Some(TextDocumentSyncCapability::Kind(
                     TextDocumentSyncKind::FULL,
