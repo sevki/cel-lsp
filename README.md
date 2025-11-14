@@ -13,6 +13,24 @@ A Language Server Protocol (LSP) implementation for the Common Expression Langua
   - Go to definition
   - Real-time diagnostics
 
+## 🌐 Web Editor
+
+A fully-featured web-based CEL editor is included in [`cel-editor-web/`](cel-editor-web/). Built with React, Monaco Editor, and Vite, it provides:
+
+- **Syntax Highlighting**: Custom Monarch tokenizer generated from CEL.g4 grammar
+- **LSP Integration**: Real-time validation, completion, and hover via HTTP
+- **Modern UI**: Dark theme optimized for CEL expressions
+- **Easy Deployment**: Deploy to Cloudflare Pages, Vercel, or Netlify
+
+**Quick Start:**
+```bash
+cd cel-editor-web
+npm install
+npm run dev
+```
+
+See [cel-editor-web/README.md](cel-editor-web/README.md) for full documentation.
+
 ## Architecture
 
 This project combines:
@@ -95,6 +113,15 @@ cel-lsp/
 │   ├── jsonrpc_protocol_tests.rs     # JSON-RPC protocol tests
 │   ├── lsp_integration_tests.rs      # LSP integration tests
 │   └── workers_endpoint_tests.rs     # Workers endpoint tests
+├── cel-editor-web/                   # Monaco-React web editor
+│   ├── src/
+│   │   ├── cel-language.js           # Monarch tokenizer
+│   │   ├── lsp-client.js             # LSP client
+│   │   ├── CelEditor.jsx             # Editor component
+│   │   └── ...
+│   ├── package.json
+│   ├── vite.config.js
+│   └── README.md
 ├── Cargo.toml                        # Rust dependencies
 ├── wrangler.toml                     # Cloudflare Workers configuration
 ├── .gitignore
